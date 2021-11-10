@@ -12,11 +12,17 @@ const Statistics = ({ goodCount, neutralCount, badCount }) => {
   return (
     <div>
       <h1>Statistics</h1>
-      <p>Good {goodCount}</p>
-      <p>Neutral {neutralCount}</p>
-      <p>Bad {badCount}</p>
-      <p>Total {getTotalCount()}</p>
-      <p>Average {isNaN(getAverageScore()) ? 0 : getAverageScore()}</p>
+      {getTotalCount() > 0 ? (
+        <>
+          <p>Good {goodCount}</p>
+          <p>Neutral {neutralCount}</p>
+          <p>Bad {badCount}</p>
+          <p>Total {getTotalCount()}</p>
+          <p>Average {isNaN(getAverageScore()) ? 0 : getAverageScore()}</p>
+        </>
+      ) : (
+        <p>No feedback given</p>
+      )}
     </div>
   );
 };
