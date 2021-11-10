@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import Header from "./components/header/Header";
 import Button from "./components/button/Button";
+import Statistics from "./components/statistics/Statistics";
 import "./App.css";
 
 function App() {
@@ -9,19 +10,24 @@ function App() {
   const [badCount, setBadCount] = useState(0);
 
   const clickHandler = (func, state) => {
-    const handler = func(state + 1);
+    const handler = () => func(state + 1);
     return handler;
   };
 
   return (
     <div className="App">
       <Header title="give feedback" />
-      <Button handleClick={clickHandler(goodCount, setGoodCount)} text="Good" />
+      <Button handleClick={clickHandler(setGoodCount, goodCount)} text="Good" />
       <Button
-        handleClick={clickHandler(neutralCount, setNeutralCount)}
+        handleClick={clickHandler(setNeutralCount, neutralCount)}
         text="Neutral"
       />
-      <Button handleClick={clickHandler(badCount, setBadCount)} text="Good" />
+      <Button handleClick={clickHandler(setBadCount, badCount)} text="Good" />
+      <Statistics
+        goodCount={goodCount}
+        neutralCount={neutralCount}
+        badCount={badCount}
+      />
     </div>
   );
 }
