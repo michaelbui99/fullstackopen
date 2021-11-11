@@ -4,6 +4,7 @@ import Button from "./components/button/Button";
 import Statistics from "./components/statistics/Statistics";
 import "./App.css";
 
+//Current exercise is 1.10 unicafe part 1d
 function App() {
   const [goodCount, setGoodCount] = useState(0);
   const [neutralCount, setNeutralCount] = useState(0);
@@ -22,7 +23,7 @@ function App() {
         handleClick={clickHandler(setNeutralCount, neutralCount)}
         text="Neutral"
       />
-      <Button handleClick={clickHandler(setBadCount, badCount)} text="Good" />
+      <Button handleClick={clickHandler(setBadCount, badCount)} text="Bad" />
       <Statistics
         goodCount={goodCount}
         neutralCount={neutralCount}
