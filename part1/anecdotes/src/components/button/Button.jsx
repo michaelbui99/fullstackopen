@@ -1,3 +1,4 @@
+import "./button.styles.css";
 const Button = ({ text, handleClick }) => {
   return (
     <button className="btn" onClick={handleClick}>

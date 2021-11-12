@@ -27,14 +27,27 @@ function App() {
     console.log({ votes });
   };
 
+  const getHighestVotedAnecdoteIndex = () => {
+    return votes.indexOf(Math.max(...votes));
+  };
+
   return (
     <div className="App">
+      <h1>Anecdote of the day</h1>
       <p>{anecdotes[selected]}</p>
       <p>{`has ${
         votes[selected] === undefined ? 0 : votes[selected]
       } votes`}</p>
-      <Button text="next anecdote" handleClick={selectNewAnecdote} />
-      <Button text="vote" handleClick={() => vote(selected)} />
+      <div
+        className="button-container"
+        style={{ display: "flex", gap: "1rem" }}
+      >
+        <Button text="next anecdote" handleClick={selectNewAnecdote} sty />
+        <Button text="vote" handleClick={() => vote(selected)} />
+      </div>
+
+      <h2>Anecdotes with the most votes</h2>
+      <p>{anecdotes[getHighestVotedAnecdoteIndex()]}</p>
     </div>
   );
 }
