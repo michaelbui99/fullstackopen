@@ -3,6 +3,8 @@ import Button from "./components/button/Button";
 import "./App.css";
 
 function App() {
+  const [selected, setSelected] = useState(0);
+  const [votes, setVotes] = useState(new Uint8Array(10));
   const anecdotes = [
     "If it hurts, do it more often",
     "Adding manpower to a late software project makes it later!",
@@ -18,11 +20,21 @@ function App() {
     setSelected(newAnecdoteIdx);
   };
 
-  const [selected, setSelected] = useState(0);
+  const vote = (index) => {
+    const newVotes = [...votes];
+    newVotes[index] += 1;
+    setVotes(newVotes);
+    console.log({ votes });
+  };
+
   return (
     <div className="App">
       <p>{anecdotes[selected]}</p>
+      <p>{`has ${
+        votes[selected] === undefined ? 0 : votes[selected]
+      } votes`}</p>
       <Button text="next anecdote" handleClick={selectNewAnecdote} />
+      <Button text="vote" handleClick={() => vote(selected)} />
     </div>
   );
 }
