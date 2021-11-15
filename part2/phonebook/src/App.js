@@ -10,12 +10,30 @@ function App() {
   };
 
   const addName = (e) => {
+    e.preventDefault();
     let newPerson = {
       name: newName,
     };
+
+    if (newName === "" || newName === null) {
+      return;
+    }
+
+    let alreadyAdded = false;
+    persons.forEach((p) => {
+      if (p.name === newName) {
+        window.alert(`${newName} is already added to the phonebook`);
+        alreadyAdded = true;
+        return;
+      }
+    });
+
+    if (alreadyAdded) {
+      return;
+    }
+
     setPersons(persons.concat(newPerson));
     console.log(persons);
-    e.preventDefault();
   };
 
   return (
