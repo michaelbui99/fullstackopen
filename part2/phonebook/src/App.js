@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from "react";
 import PhoneBookEntry from "./components/PhoneBookEntry";
+import SearchFilter from "./components/search-filter/SearchFilter";
+import NewEntryInput from "./components/new-entry-input/NewEntryInput";
 import "./App.css";
 
 function App() {
@@ -73,26 +75,13 @@ function App() {
   return (
     <div className="App">
       <h2>Phonebook</h2>
-      <div>
-        <p>
-          Filter shown with:{" "}
-          <span>
-            <input type="text" onChange={handleFilterInputChange} />
-          </span>
-        </p>
-      </div>
+      <SearchFilter handleFilterInputChange={handleFilterInputChange} />
       <h2>Add new entry</h2>
-      <form onSubmit={addPerson}>
-        <div>
-          name: <input type="text" onChange={handleNameInputChange} />
-        </div>
-        <div>
-          number: <input type="text" onChange={handleNumberInputChange} />
-        </div>
-        <div>
-          <button type="submit">Add</button>
-        </div>
-      </form>
+      <NewEntryInput
+        handleNameInputChange={handleNameInputChange}
+        handleNumberInputChange={handleNumberInputChange}
+        onSubmit={addPerson}
+      />
       <button onClick={seed}>Add Test Data</button>
       <h2>Numbers</h2>
       {personsToShow.map((p) => (
