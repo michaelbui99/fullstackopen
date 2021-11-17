@@ -3,6 +3,7 @@ import PhoneBookEntry from "./components/PhoneBookEntry";
 import SearchFilter from "./components/search-filter/SearchFilter";
 import NewEntryInput from "./components/new-entry-input/NewEntryInput";
 import "./App.css";
+import axios from "axios";
 
 function App() {
   const [persons, setPersons] = useState([
@@ -16,8 +17,15 @@ function App() {
   ]);
 
   useEffect(() => {
+    axios
+      .get("http://localhost:8080/persons")
+      .then((response) => {
+        return setPersons(response.data);
+      })
+      .catch((e) => console.error(e));
+    console.log("render");
     setPersonsToShow(persons);
-  }, [persons]);
+  }, []);
 
   const handleNameInputChange = (e) => {
     setNewName(e.target.value);
