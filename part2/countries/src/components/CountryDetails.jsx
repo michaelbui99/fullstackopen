@@ -5,9 +5,9 @@ const CountryDetails = ({ country }) => {
       <p>{country.capital[0]}</p>
       <h3>Languages:</h3>
       <ul>
-        {Object.entries(country.languages).map((l) => (
-          <li>{l[1]}</li>
-        ))}
+        {country.languages !== null
+          ? Object.entries(country.languages).map((l) => <li>{l[1]}</li>)
+          : ""}
       </ul>
 
       <img
