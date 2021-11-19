@@ -1,3 +1,5 @@
+import StatisticLine from "../statistic-line/StatisticLine";
+
 const Statistics = ({ goodCount, neutralCount, badCount }) => {
   const getTotalCount = () => {
     return goodCount + neutralCount + badCount;
@@ -12,11 +14,22 @@ const Statistics = ({ goodCount, neutralCount, badCount }) => {
   return (
     <div>
       <h1>Statistics</h1>
-      <p>Good {goodCount}</p>
-      <p>Neutral {neutralCount}</p>
-      <p>Bad {badCount}</p>
-      <p>Total {getTotalCount()}</p>
-      <p>Average {isNaN(getAverageScore()) ? 0 : getAverageScore()}</p>
+      {getTotalCount() > 0 ? (
+        <>
+          <table>
+            <StatisticLine text="Good" value={goodCount} />
+            <StatisticLine text="Neutral" value={neutralCount} />
+            <StatisticLine text="Bad" value={badCount} />
+            <StatisticLine text="Total" value={getTotalCount()} />
+            <StatisticLine
+              text="Average"
+              value={isNaN(getAverageScore()) ? 0 : getAverageScore()}
+            />
+          </table>
+        </>
+      ) : (
+        <p>No feedback given</p>
+      )}
     </div>
   );
 };
