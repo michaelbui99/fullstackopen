@@ -9,6 +9,12 @@ const CountryDetails = ({ country }) => {
           <li>{l[1]}</li>
         ))}
       </ul>
+
+      <img
+        src={country.flags.svg}
+        alt="flag"
+        style={{ maxWidth: "10rem", maxHeight: "10rem" }}
+      />
     </>
   );
 };
