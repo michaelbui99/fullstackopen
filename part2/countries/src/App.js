@@ -1,23 +1,41 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState, useEffect } from "react";
 
+import "./App.css";
+import axios from "axios";
 function App() {
+  const URL = "https://restcountries.com/v3.1/all";
+  const [countryInput, setCountryInput] = useState("");
+  const [fetchedCountries, setFetchedCountries] = useState([]);
+  const [countriesToShow, setCountriesToShow] = useState([]);
+  const handleCountrInputChange = (e) => {
+    setCountryInput(e.target.value, filterCountries());
+  };
+
+  useEffect(() => {
+    async function fetchData() {
+      let countries = await axios.get(URL);
+      setFetchedCountries(countries.data);
+    }
+    fetchData();
+  }, []);
+
+  const filterCountries = () => {
+    let filteredCountries = fetchedCountries.filter((c) =>
+      c.name.common.includes(countryInput)
+    );
+    console.log({ filteredCountries });
+    setCountriesToShow(filteredCountries);
+  };
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <p>Find countries</p>
+      <input type="text" onChange={handleCountrInputChange} />
+      {countriesToShow.length > 0
+        ? countriesToShow.length > 10
+          ? "Too many matches, specify another filter"
+          : countriesToShow.map((c) => <p key={c.cca2}>{c.name.common}</p>)
+        : ""}
     </div>
   );
 }
