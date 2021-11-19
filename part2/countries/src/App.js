@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import CountryDetails from "./components/CountryDetails";
 import "./App.css";
 import axios from "axios";
+import ExpandableCountryDetails from "./components/ExpandableCountryDetails";
 function App() {
   const URL = "https://restcountries.com/v3.1/all";
   const [countryInput, setCountryInput] = useState("");
@@ -35,7 +36,9 @@ function App() {
         countriesToShow.length > 10 ? (
           "Too many matches, specify another filter"
         ) : (
-          countriesToShow.map((c) => <p key={c.cca2}>{c.name.common}</p>)
+          countriesToShow.map((c) => (
+            <ExpandableCountryDetails country={c} key={c.cca2} />
+          ))
         )
       ) : countriesToShow.length === 1 ? (
         <CountryDetails country={countriesToShow[0]} />
