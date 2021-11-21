@@ -28,6 +28,15 @@ function App() {
     setCountriesToShow(filteredCountries);
   };
 
+  //TODO: Set api key as process env variable.
+  const fetchWeatherData = async (capital) => {
+    const URL = `http://api.weatherstack.com/current?access_key=${process.env.REACT_APP_API_KEY}&query=${capital}`
+    const response = await axios.get(URL); 
+    console.log(URL);
+
+    return response.data;
+  }
+
   return (
     <div className="App">
       <p>Find countries</p>
@@ -41,7 +50,7 @@ function App() {
           ))
         )
       ) : countriesToShow.length === 1 ? (
-        <CountryDetails country={countriesToShow[0]} />
+        <CountryDetails country={countriesToShow[0]} weatherDetails={fetchWeatherData()} />
       ) : (
         ""
       )}
