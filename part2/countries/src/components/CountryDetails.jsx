@@ -1,3 +1,6 @@
+import React, { useState, useEffect } from "react";
+import WeatherDetails from "./WeatherDetails";
+
 const CountryDetails = ({ country }) => {
   return (
     <>
