@@ -3,9 +3,9 @@ import PhoneBookEntry from "./components/PhoneBookEntry";
 import SearchFilter from "./components/search-filter/SearchFilter";
 import NewEntryInput from "./components/new-entry-input/NewEntryInput";
 import "./App.css";
-import axios from "axios";
 
 function App() {
+  const personService = require("./services/PersonService").default;
   const [persons, setPersons] = useState([
     { name: "Arto Hellas", number: "321-321321-2" },
   ]);
@@ -15,17 +15,16 @@ function App() {
   const [personsToShow, setPersonsToShow] = useState([
     { name: "Arto Hellas", number: "321-321321-2" },
   ]);
-
+  const service = personService();
   useEffect(() => {
-    axios
-      .get("http://localhost:8080/persons")
-      .then((response) => {
-        return setPersons(response.data);
-      })
-      .catch((e) => console.error(e));
-    console.log("render");
-    setPersonsToShow(persons);
+    fetchAllPersons();
   }, []);
+
+  const fetchAllPersons = async () => {
+    const allPersons = await service.getAll();
+    console.log({ allPersons });
+    setPersonsToShow(allPersons);
+  };
 
   const handleNameInputChange = (e) => {
     setNewName(e.target.value);
