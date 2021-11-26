@@ -55,11 +55,8 @@ export default function personService() {
       ) {
         throw "Invalid person";
       }
-
-      const existingPerson = await this.getByName(person.name);
-      if (existingPerson === null || existingPerson === undefined) {
-        return await axios.post(`${this.url}`, person).data;
-      } else {
+      try {
+        const existingPerson = await this.getByName(person.name);
         console.log({ existingPerson });
         let replace = window.confirm(
           `${person.name} is already added to the phonebook, replace old number with new number? `
@@ -70,10 +67,11 @@ export default function personService() {
             `${this.url}/${existingPerson.id}`,
             updatedPerson
           );
-          return response.data;
         } else {
           return;
         }
+      } catch (err) {
+        this.createPerson(person);
       }
     },
 

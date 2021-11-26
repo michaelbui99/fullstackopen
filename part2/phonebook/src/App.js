@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import PhoneBookEntry from "./components/PhoneBookEntry";
 import SearchFilter from "./components/search-filter/SearchFilter";
 import NewEntryInput from "./components/new-entry-input/NewEntryInput";
+import Notification from "./components/notification/Notification";
 import "./App.css";
 
 function App() {
@@ -15,6 +16,7 @@ function App() {
   const [personsToShow, setPersonsToShow] = useState([
     { name: "Arto Hellas", number: "321-321321-2" },
   ]);
+  const [message, setMessage] = useState(null);
   const service = personService();
   useEffect(() => {
     fetchAllPersons();
@@ -51,10 +53,20 @@ function App() {
     try {
       console.log({ newPerson });
       const createdPerson = await service.update(newPerson.name, newPerson);
+      const persons = await service.getAll();
       if (createdPerson == null) {
+        setMessage(`Updated ${newPerson.name}`);
+        setTimeout(() => {
+          setMessage(null);
+        }, 5000);
+        setPersonsToShow(persons);
         return;
       }
-      setPersonsToShow(await service.getAll());
+      setPersonsToShow(persons);
+      setMessage(`Added ${newPerson.name}`);
+      setTimeout(() => {
+        setMessage(null);
+      }, 5000);
       console.log("New Person: ", newPerson);
     } catch (err) {
       console.error(err);
@@ -73,6 +85,7 @@ function App() {
   return (
     <div className="App">
       <h2>Phonebook</h2>
+      {message === null ? "" : <Notification message={message} />}
       <SearchFilter handleFilterInputChange={handleFilterInputChange} />
       <h2>Add new entry</h2>
       <NewEntryInput
