@@ -42,32 +42,20 @@ function App() {
     setPersonsToShow(persons.filter((p) => p.name.includes(nameFilter)));
   };
 
-  const addPerson = (e) => {
+  const addPerson = async (e) => {
     e.preventDefault();
     let newPerson = {
       name: newName,
       number: newNumber,
     };
-
-    if (newName === "" || newName === null) {
-      return;
+    try {
+      service
+        .createPerson(newPerson)
+        .then(() => setPersonsToShow(persons.concat(newPerson)));
+      console.log("New Person: ", newPerson);
+    } catch (err) {
+      console.error(err);
     }
-
-    let alreadyAdded = false;
-    persons.forEach((p) => {
-      if (p.name === newPerson.name) {
-        window.alert(`${newName} is already added to the phonebook`);
-        alreadyAdded = true;
-        return;
-      }
-    });
-
-    if (alreadyAdded) {
-      return;
-    }
-
-    setPersons(persons.concat(newPerson));
-    console.log(persons);
   };
 
   const seed = () => {
