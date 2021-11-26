@@ -80,7 +80,7 @@ function App() {
       <button onClick={seed}>Add Test Data</button>
       <h2>Numbers</h2>
       {personsToShow.map((p) => (
-        <PhoneBookEntry person={p} />
+        <PhoneBookEntry person={p} setPersons={setPersonsToShow} />
       ))}
     </div>
   );
