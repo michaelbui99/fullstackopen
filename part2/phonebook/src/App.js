@@ -49,9 +49,12 @@ function App() {
       number: newNumber,
     };
     try {
-      service
-        .createPerson(newPerson)
-        .then(() => setPersonsToShow(persons.concat(newPerson)));
+      console.log({ newPerson });
+      const createdPerson = await service.update(newPerson.name, newPerson);
+      if (createdPerson == null) {
+        return;
+      }
+      setPersonsToShow(await service.getAll());
       console.log("New Person: ", newPerson);
     } catch (err) {
       console.error(err);
