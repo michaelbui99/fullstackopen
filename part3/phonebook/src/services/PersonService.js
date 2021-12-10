@@ -1,7 +1,7 @@
 import axios from "axios";
 export default function personService() {
   return {
-    url: "http://localhost:8080/persons",
+    url: "http://localhost:8080/api/persons",
     getAll: async function () {
       const response = await axios.get(this.url);
       return response.data;
