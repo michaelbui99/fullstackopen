@@ -28,7 +28,6 @@ function App() {
 
   const fetchAllPersons = async () => {
     const allPersons = await service.getAll();
-    console.log({ allPersons });
     setPersons(allPersons);
     setPersonsToShow(persons);
     setPersonsToShow(allPersons);
