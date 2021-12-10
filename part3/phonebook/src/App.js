@@ -22,9 +22,15 @@ function App() {
     fetchAllPersons();
   }, []);
 
+  useEffect(() => {
+    executeFilter();
+  }, [personsToShow]);
+
   const fetchAllPersons = async () => {
     const allPersons = await service.getAll();
     console.log({ allPersons });
+    setPersons(allPersons);
+    setPersonsToShow(persons);
     setPersonsToShow(allPersons);
   };
 
@@ -36,11 +42,13 @@ function App() {
   };
 
   const handleFilterInputChange = (e) => {
-    //TODO: Find cause for delayed update of displayed entries when filtering.
     setNameFilter(e.target.value, executeFilter());
   };
 
   const executeFilter = () => {
+    if (!nameFilter) {
+      setPersonsToShow(persons);
+    }
     setPersonsToShow(persons.filter((p) => p.name.includes(nameFilter)));
   };
 
